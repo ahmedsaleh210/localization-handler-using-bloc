@@ -4,12 +4,14 @@ import 'package:flutter_localization_example/cubit/app_cubit.dart';
 import 'package:flutter_localization_example/home_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'core/bloc_observer.dart';
 import 'core/langs.dart';
 import 'generated/l10n.dart';
 import 'injector.dart' as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = MyBlocObserver();
   await di.init();
   runApp(const MyApp());
 }
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
       child: BlocBuilder<LanguageCubit, LanguageState>(
         builder: (context, state) {
           return MaterialApp(
-            supportedLocales: L10n.all,
+            supportedLocales: Language.supportedLocales,
             locale: state.selectedLanguage,
             localizationsDelegates: const [
               S.delegate,
